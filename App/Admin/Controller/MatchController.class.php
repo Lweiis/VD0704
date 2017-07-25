@@ -48,8 +48,11 @@ class MatchController extends AdminCoreController {
         }
     }
 
-    public function exactAsdf() {
-        $this->ajaxReturn(I('param.company_name'));
+    public function exactInfo() {
+        $name = I('param.company_name');
+        $company = M('Company')->where(array('unicom_name'=>$name))->field('id,unicom_name')->find();
+        $this->ajaxReturn(json_encode($company));
+
     }
 
     //动态搜索

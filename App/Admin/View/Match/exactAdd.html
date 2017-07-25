@@ -95,8 +95,8 @@ textarea{resize:vertical}
         /*获取搜索框内容*/
         const company_name = $('#package').val();
         // TODO 验证公司名称并获取 id 和套餐信息
-        $.get("{:U('admin/match/exactAsdf')}&p=",{'company_name': company_name}, function(result){
-            alert(result);
+        $.get("{:U('admin/match/exactInfo')}&p=",{'company_name': company_name}, function(result){
+                alert(result);
         });
         $('#tb').append(
            `<tr>
