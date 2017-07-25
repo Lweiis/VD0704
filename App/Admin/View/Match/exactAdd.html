@@ -36,9 +36,9 @@ textarea{resize:vertical}
             <input type="text" name="start" value="<notempty name="Think.get.start">{$Think.get.start}</notempty>" class="form-control">
         </label>
         <div class="ibox-content" >
-            <div id="condition-search" style="display: block; float: left" class="col-sm-8">
+            <div id="condition-search" style="display: block; float: left">
                 <form method="get">
-                    <label class="input-group col-sm-6">
+                    <label class="input-group col-xs-6">
                         <input type="text" class="form-control" id="package" name="company_name" placeholder='请输入公司名,全部敲空格' value="{$Think.get.company_name}">
                         <span class="input-group-btn">
 										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
@@ -65,10 +65,7 @@ textarea{resize:vertical}
                         <th class="center">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                        <tr id="companyInfo">
-
-                        </tr>
+                    <tbody id="tb">
                     </tbody>
                     <tfoot>
                     <tr>
@@ -96,11 +93,17 @@ textarea{resize:vertical}
         /*添加公司*/
     function addCompany() {
         /*获取搜索框内容*/
-        var v = $('#package').val();
-        /*append搜索框内容*/
-        var s = "<tr><td class='col-sm-4'>"+v+"</td>";
-        var cb = '<td class="center"><button id="cancel_company" onclick="cancel()" value="{$info.id}">'+"取消选择"+'</button></td></tr>"';
-        $('#companyInfo').append(s+cb);
+        const company_name = $('#package').val();
+        // TODO 验证公司名称并获取 id 和套餐信息
+        $.get("{:U('admin/match/exactAsdf')}&p=",{'company_name': company_name}, function(result){
+            alert(result);
+        });
+        $('#tb').append(
+           `<tr>
+                <td> ${company_name} </td>
+                <td> <button id="cancel_company" onclick="cancel()" value="{$info.id}">取消选择</button> </td>
+            </tr>`
+        );
     }
 </script>
 <script>

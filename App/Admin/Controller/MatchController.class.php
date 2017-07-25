@@ -48,6 +48,10 @@ class MatchController extends AdminCoreController {
         }
     }
 
+    public function exactAsdf() {
+        $this->ajaxReturn(I('param.company_name'));
+    }
+
     //动态搜索
     public function exactSearch(){
 
