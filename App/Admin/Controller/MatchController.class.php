@@ -60,10 +60,12 @@ class MatchController extends AdminCoreController {
                 $map['unicom_name'] = array('LIKE','%'.$p.'%');
             }
             $temp = array();
-            $list = M('company')->where($map)->order('create_time desc')->field('unicom_name as name')->select();
+            $list = M('company')->where($map)->order('create_time desc')->field('id,unicom_name as name')->select();
             foreach($list as $key=>$value)
             {
                 $temp['result'][$key][] = $value['name'];
+                $temp['result'][$key][] = $value['id'];
+
             }
             $temp = json_encode($temp);
             echo $temp;exit;

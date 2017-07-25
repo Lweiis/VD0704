@@ -38,7 +38,7 @@ textarea{resize:vertical}
         <div class="ibox-content" >
             <div id="condition-search" style="display: block; float: left" class="col-sm-8">
                 <form method="get">
-                    <label class="input-group col-sm-4">
+                    <label class="input-group col-sm-6">
                         <input type="text" class="form-control" id="package" name="company_name" placeholder='请输入公司名,全部敲空格' value="{$Think.get.company_name}">
                         <span class="input-group-btn">
 										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
@@ -48,13 +48,13 @@ textarea{resize:vertical}
 										</ul>
 									</span>
                     </label>
-                    <label class="input-group col-sm-8">
+                    <label class="input-group col-sm-1">
                         <input type="hidden" name="m" value="admin" />
                         <input type="hidden" name="a" value="exactSearch" />
                         <input type="hidden" name="c" value="match" />
                     </label>
-                    <label class="col-sm-4 text-right pull-right"><button type="submit" class="btn btn-outline btn-primary">立即搜索</button></label>
                 </form>
+                <button id="addCompany" onclick="addCompany()" class="btn btn-outline btn-primary col-sm-2">添加企业</button>
             </div>
             <div id="content" style="display: block" >
 
@@ -66,12 +66,9 @@ textarea{resize:vertical}
                     </tr>
                     </thead>
                     <tbody>
-                    <volist name="list" id="info">
-                        <tr>
-                            <td id="{$info.id}">{$info.unicom_name}</td>
-                            <td class="center"><button id="cancel_company" onclick="cancel()" value="{$info.id}">取消选择</button></td>
+                        <tr id="companyInfo">
+
                         </tr>
-                    </volist>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -94,6 +91,16 @@ textarea{resize:vertical}
         /*删除公司*/
     function cancel() {
         $('#cancel_company').parent().parent().remove();
+    }
+
+        /*添加公司*/
+    function addCompany() {
+        /*获取搜索框内容*/
+        var v = $('#package').val();
+        /*append搜索框内容*/
+        var s = "<tr><td class='col-sm-4'>"+v+"</td>";
+        var cb = '<td class="center"><button id="cancel_company" onclick="cancel()" value="{$info.id}">'+"取消选择"+'</button></td></tr>"';
+        $('#companyInfo').append(s+cb);
     }
 </script>
 <script>
