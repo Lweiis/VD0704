@@ -86,28 +86,41 @@ textarea{resize:vertical}
 </body>
 <script>
         /*删除公司*/
-    function cancel() {
-        $('#cancel_company').parent().parent().remove();
+    function cancel(el) {
+        var name = $(el).parent().prev().text();
+        //TODO(Lweiis) 同时删除 sessionStorage 中的数据 （对于非完整的公司名称，添加后删除会导致 sessionStorage 变为 null）
+        let cps = JSON.parse(sessionStorage.getItem('companies'));
+        let l = cps.length;
+        while (l--) {
+            if((cps[i=l]).match(name)){
+                cps.splice(l, 1);
+            };
+        }
+        sessionStorage.setItem("companies", JSON.stringify(cps));
+        $(el).parent().parent().remove();
     }
 
         /*添加公司*/
     function addCompany() {
         /*获取搜索框内容*/
         const company_name = $('#package').val();
-        // TODO 验证公司名称并获取 id 和套餐信息
+        // 验证公司名称并获取 id 和套餐信息,放入到 sessionStorage 中
         $.get("{:U('admin/match/exactInfo')}&p=",{'company_name': company_name}, function(result){
-                alert(result);
-        });
+            let cps = JSON.parse(sessionStorage.getItem('companies'));
+            cps.push(result);
+            sessionStorage.setItem('companies', JSON.stringify(cps));
+        });   
         $('#tb').append(
            `<tr>
-                <td> ${company_name} </td>
-                <td> <button id="cancel_company" onclick="cancel()" value="{$info.id}">取消选择</button> </td>
+                <td>${company_name}</td>
+                <td> <button onclick="cancel(this)">取消选择</button> </td>
             </tr>`
         );
     }
 </script>
 <script>
     $(document).ready(function(){
+        sessionStorage.setItem("companies", "[]");
         window.parent.remove_load();
         var taobaoBsSuggest = $("#package").bsSuggest({
             indexId: 2,             //data.value 的第几个数据，作为input输入框的内容
@@ -125,7 +138,6 @@ textarea{resize:vertical}
                     return false;
                 }
 
-                console.log(json);
                 len = json.result.length;
 
                 for (i = 0; i < len; i++) {
