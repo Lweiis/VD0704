@@ -128,6 +128,7 @@
                     <!--判断-->
                     <script>
                         $().ready(function () {
+                            window.parent.remove_load();
                             var result = $('#task_id').text();
                             if (result === ''){
                                 $('#addTask').css('display','block');
