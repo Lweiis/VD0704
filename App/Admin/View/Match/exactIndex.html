@@ -45,7 +45,7 @@
                         </form>
                     </div>
 
-                    <div id="addTask" style="display: none; float: left" >
+                    <div id="addTask" style="display:block; float: left" >
                         <a id="add_task" href="{:U('admin/match/exactAdd',array('start' => $_GET['start']))}" class="btn btn-outline btn-success">添加任务</a>
                     </div>
 
@@ -130,8 +130,11 @@
                         $().ready(function () {
                             window.parent.remove_load();
                             var result = $('#task_id').text();
-                            if (result === ''){
-                                $('#addTask').css('display','block');
+                            var now_url = window.location.href;
+                            if (result === '' && now_url.indexOf('start')===-1){
+                                $('#addTask').css('display','none');
+                            }
+                            if (result ===''){
                                 $('#content').css('display','none');
                             }
                         })
